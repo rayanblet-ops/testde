@@ -34,17 +34,24 @@ const Header: React.FC = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            // Adjust radius based on screen width
-            if (window.innerWidth < 640) {
-                 // Reduce radius further for better centering on narrow screens
-                setRadius(85); 
+             const isMobile = window.innerWidth < 640;
+        
+            if (isMobile) {
+                const viewportWidth = document.documentElement.clientWidth;
+                const viewportHeight = window.innerHeight;
+                const itemWidth = 60;
+                const padding = 20;
+
+                const maxRadiusForWidth = (viewportWidth / 2) - (itemWidth / 2) - padding;
+                const maxRadiusForHeight = (viewportHeight / 2) - (itemWidth / 2) - padding;
+                
+                setRadius(Math.max(100, Math.min(maxRadiusForWidth, maxRadiusForHeight)));
             } else {
-                // Use a larger perfect circle on desktop
                 setRadius(220);
             }
         };
 
-        handleResize(); // Set initial radius on component mount
+        handleResize();
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
@@ -53,18 +60,17 @@ const Header: React.FC = () => {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
-        e.preventDefault(); // Prevent default hash change
+        e.preventDefault();
         
-        setIsOpen(false); // Start closing the menu
+        setIsOpen(false);
         
-        // Wait for the menu closing animation to proceed before changing the page
         setTimeout(() => {
             window.location.hash = path;
-        }, 400); // The CSS transition is 0.5s
+        }, 400);
     };
     
-    const startAngle = -Math.PI / 2; // Start at 270 degrees (top)
-    const sweepAngle = 2 * Math.PI; // Sweep 360 degrees
+    const startAngle = -Math.PI / 2;
+    const sweepAngle = 2 * Math.PI;
 
     return (
         <>
@@ -81,9 +87,13 @@ const Header: React.FC = () => {
                     const angle = startAngle + (index / pages.length) * sweepAngle;
                     const x = radius * Math.cos(angle);
                     const y = radius * Math.sin(angle);
-                    const itemStyle = isOpen
-                        ? { transform: `translate(${x}px, ${y}px) scale(1)`, transitionDelay: `${index * 40}ms` }
-                        : { transform: `translate(0, 0) scale(0)`, transitionDelay: `0ms` };
+                    
+                    const itemStyle = {
+                      transform: isOpen
+                        ? `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1)`
+                        : 'translate(-50%, -50%) scale(0)',
+                      transitionDelay: isOpen ? `${index * 40}ms` : '0ms'
+                    };
                     
                     return (
                         <div key={page.path} className="menu-item" style={itemStyle}>
