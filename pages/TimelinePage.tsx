@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 
-const MyStory: React.FC = () => {
+const TimelinePage: React.FC = () => {
     const [activeTab, setActiveTab] = useState('2024');
 
     const tabData = {
@@ -37,7 +36,7 @@ const MyStory: React.FC = () => {
     );
 
     return (
-        <section id="story" className="py-20 px-6 bg-white scroll-animate">
+        <section className="py-20 px-6 bg-white">
             <div className="container mx-auto max-w-5xl text-center">
                 <h2 className="font-playfair text-4xl font-bold text-pink-500 mb-12">Моя история</h2>
                 <div className="flex justify-center border-b-2 border-rose-100 pb-4 mb-8">
@@ -65,4 +64,4 @@ const MyStory: React.FC = () => {
     );
 };
 
-export default MyStory;
+export default TimelinePage;

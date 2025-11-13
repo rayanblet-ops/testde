@@ -11,7 +11,7 @@ const HighlightCard: React.FC<{ title: string; description: string; icon: string
 
 const Highlights: React.FC = () => {
     return (
-        <section id="highlights" className="py-20 px-6 bg-rose-50">
+        <section id="highlights" className="py-20 px-6 bg-rose-50 scroll-animate">
             <div className="container mx-auto max-w-5xl text-center">
                 <h2 className="font-playfair text-4xl font-bold text-pink-500 mb-12">Ключевые моменты</h2>
                 <div className="grid md:grid-cols-3 gap-8">
