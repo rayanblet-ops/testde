@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const pages = [
     { path: '/', name: 'Главная', icon: '🏠', color: '#ff7979' },
@@ -6,7 +6,7 @@ const pages = [
     { path: '/timeline', name: 'История', icon: '📜', color: '#f9ca24' },
     { path: '/school', name: 'Школа', icon: '🎓', color: '#7ed6df' },
     { path: '/hobbies', name: 'Хобби', icon: '🤸‍♀️', color: '#e056fd' },
-    { path: '/achievements', name: 'Достижения', icon: '🏆', color: '#f0932b' },
+    { path: '/achievements', name: 'Успехи', icon: '🏆', color: '#f0932b' },
     { path: '/friends', name: 'Друзья', icon: '💖', color: '#ffbe76' },
     { path: '/birthdays', name: 'ДР', icon: '🎉', color: '#686de0' },
     { path: '/dreams', name: 'Мечты', icon: '🚀', color: '#ff7f50' },
@@ -30,6 +30,25 @@ const CloseIcon = () => (
 
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [radius, setRadius] = useState(220);
+
+    useEffect(() => {
+        const handleResize = () => {
+            // Adjust radius based on screen width
+            if (window.innerWidth < 640) {
+                 // Reduce radius further for better centering on narrow screens
+                setRadius(85); 
+            } else {
+                // Use a larger perfect circle on desktop
+                setRadius(220);
+            }
+        };
+
+        handleResize(); // Set initial radius on component mount
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -43,8 +62,7 @@ const Header: React.FC = () => {
             window.location.hash = path;
         }, 400); // The CSS transition is 0.5s
     };
-
-    const radius = 200; // Radius of the circle
+    
     const startAngle = -Math.PI / 2; // Start at 270 degrees (top)
     const sweepAngle = 2 * Math.PI; // Sweep 360 degrees
 

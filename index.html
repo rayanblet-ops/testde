@@ -120,11 +120,12 @@
         }
         .menu-item .icon {
             font-size: 2rem;
+            margin-bottom: 2px;
         }
         .menu-item .label {
             font-size: 0.75rem;
             font-weight: bold;
-            margin-top: 4px;
+            text-align: center;
         }
 
         /* --- Page transition styles --- */
@@ -168,6 +169,32 @@
         .fab:hover {
             background-color: #f472b6;
             transform: scale(1.1);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 640px) {
+            .radial-menu-container {
+                top: 15px;
+                right: 15px;
+            }
+            .menu-trigger {
+                width: 50px;
+                height: 50px;
+            }
+            .menu-item a {
+                width: 60px;
+                height: 60px;
+                padding: 4px;
+                box-sizing: border-box;
+            }
+            .menu-item .icon {
+                font-size: 1.2rem;
+                margin-bottom: 1px;
+            }
+            .menu-item .label {
+                font-size: 0.55rem;
+                line-height: 1.1;
+            }
         }
     </style>
 <script type="importmap">
